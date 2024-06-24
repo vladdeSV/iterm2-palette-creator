@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>iTerm2 Color Preset Creator</title>
+    <style>
+      .fg {
+        color: var(--foreground-color);
+      }
+      .fg0 {
+        color: var(--ansi-0);
+      }
+      .fg1 {
+        color: var(--ansi-1);
+      }
+      .fg2 {
+        color: var(--ansi-2);
+      }
+      .fg3 {
+        color: var(--ansi-3);
+      }
+      .fg4 {
+        color: var(--ansi-4);
+      }
+      .fg5 {
+        color: var(--ansi-5);
+      }
+      .fg6 {
+        color: var(--ansi-6);
+      }
+      .fg7 {
+        color: var(--ansi-7);
+      }
+      .fg8 {
+        color: var(--ansi-8);
+      }
+      .fg9 {
+        color: var(--ansi-9);
+      }
+      .fg10 {
+        color: var(--ansi-10);
+      }
+      .fg11 {
+        color: var(--ansi-11);
+      }
+      .fg12 {
+        color: var(--ansi-12);
+      }
+      .fg13 {
+        color: var(--ansi-13);
+      }
+      .fg14 {
+        color: var(--ansi-14);
+      }
+      .fg15 {
+        color: var(--ansi-15);
+      }
+
+      .bg {
+        background-color: var(--background-color);
+      }
+      .bg0 {
+        background-color: var(--ansi-0);
+      }
+      .bg1 {
+        background-color: var(--ansi-1);
+      }
+      .bg2 {
+        background-color: var(--ansi-2);
+      }
+      .bg3 {
+        background-color: var(--ansi-3);
+      }
+      .bg4 {
+        background-color: var(--ansi-4);
+      }
+      .bg5 {
+        background-color: var(--ansi-5);
+      }
+      .bg6 {
+        background-color: var(--ansi-6);
+      }
+      .bg7 {
+        background-color: var(--ansi-7);
+      }
+      .bg8 {
+        background-color: var(--ansi-8);
+      }
+      .bg9 {
+        background-color: var(--ansi-9);
+      }
+      .bg10 {
+        background-color: var(--ansi-10);
+      }
+      .bg11 {
+        background-color: var(--ansi-11);
+      }
+      .bg12 {
+        background-color: var(--ansi-12);
+      }
+      .bg13 {
+        background-color: var(--ansi-13);
+      }
+      .bg14 {
+        background-color: var(--ansi-14);
+      }
+      .bg15 {
+        background-color: var(--ansi-15);
+      }
+
+      .bold {
+        font-weight: bold;
+      }
+      .link {
+        color: var(--link-color);
+      }
+      .find-match {
+        background-color: var(--find-match-color);
+      }
+      .selection {
+        background-color: var(--selection-color);
+      }
+      .underline {
+        text-decoration: underline;
+      }
+
+      .cursor-text {
+        color: var(--cursor-text-color);
+      }
+
+      .cursor {
+        background-color: var(--cursor-color);
+      }
+    </style>
+    <style>
+      .terminal {
+        position: relative;
+        display: inline-block;
+        font-size: 13px;
+        line-height: 16px;
+        letter-spacing: 0.013em;
+        margin: 32.5px;
+        padding: 5px;
+        padding-bottom: 2px;
+        z-index: 0;
+
+        overflow: hidden;
+
+        /* macos windows border thing, finally figured out */
+        border-radius: 10px;
+        box-shadow:
+          0 36px 55px 0 rgba(0, 0, 0, var(--shadow-intensity)),
+          0 26px 35px 0 rgba(0, 0, 0, var(--shadow-intensity)),
+          0 16px 25px 0 rgba(0, 0, 0, var(--shadow-intensity));
+
+        /* dark mode */
+        --shadow-intensity: 0.25;
+        border: 0.5px solid black;
+        outline: 1px solid #ffffff33;
+        outline-offset: -1.5px;
+
+        /* light mode */
+        --shadow-intensity: 0.15;
+        border: 0.5px solid #cacaca;
+        outline: none;
+
+        background-color: var(--background-color);
+        color: var(--foreground-color);
+
+        & span {
+          display: inline-block;
+        }
+
+        &:has(#use-tab:checked) .tab {
+          background-color: var(--tab-color);
+        }
+
+        .cursor-guide {
+          display: block;
+        }
+        &:has(#use-guide:checked) .cursor-guide {
+          background-color: var(--cursor-guide-color);
+          border: 1px solid var(--cursor-guide-color);
+          border-left: none;
+          border-right: none;
+          margin-top: -1px;
+          margin-bottom: -1px;
+        }
+
+        &:has(#use-bold:checked) .bold {
+          color: var(--bold-color);
+        }
+        &:has(#use-underline:checked) .underline {
+          text-decoration-color: var(--underline-color);
+        }
+
+        &:has(#use-selected-text-color:checked) ::selection,
+        &:has(#use-selected-text-color:checked) .selected-text {
+          color: var(--selected-text-color);
+        }
+
+        & ::selection {
+          background-color: var(--selection-color);
+        }
+
+        & .badge {
+          color: var(--badge-color);
+          user-select: none;
+          font-family: Helvetica, sans-serif;
+          position: absolute;
+
+          font-weight: 500;
+          z-index: -10;
+          font-family: sans-serif;
+          font-size: 60px;
+          font-weight: 600;
+          top: 83px;
+          right: 11px;
+          display: none;
+        }
+
+        &:has(#use-badge:checked) .badge {
+          display: inline-block;
+        }
+
+        & label {
+          display: inline-block;
+        }
+
+        & input {
+          display: inline-block;
+          appearance: none;
+          font-family: monospace;
+          vertical-align: bottom;
+          border: none;
+          background: none;
+          color: var(--foreground-color);
+          user-select: all;
+
+          margin: 0;
+          padding: 0;
+        }
+
+        input:invalid {
+          outline: 1px solid red;
+        }
+
+        & input[type="text"] {
+          width: 6ch;
+          height: 16px;
+
+          &[data-alpha] {
+            width: 8ch;
+          }
+        }
+
+        & input[type="checkbox"] {
+          display: inline-block;
+          cursor: pointer;
+
+          &::before {
+            font-family: monospace;
+            content: "[ ]";
+          }
+
+          &:checked::before {
+            content: "[x]";
+          }
+        }
+      }
+
+      .content {
+        z-index: 10;
+      }
+      .content > pre {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .tab {
+        margin: -5px;
+        margin-bottom: 2px;
+
+        padding-left: 12.5px;
+        padding-top: 12.5px;
+        padding-bottom: 13.5px;
+        position: relative;
+      }
+
+      h1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        inset: 0;
+        text-align: center;
+        color: #5a595a;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        font-size: 1em;
+        margin: 0;
+        padding: 0;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 8px;
+
+        & > div {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+
+          &.close {
+            background-color: #ff5f56;
+          }
+
+          &.minimize {
+            background-color: #ffbd2e;
+          }
+
+          &.zoom {
+            background-color: #27c93f;
+          }
+        }
+      }
+
+      .fork {
+        color: transparent;
+
+        &::selection {
+          color: var(--foreground-color);
+        }
+
+        &::before {
+          user-select: none;
+          color: var(--foreground-color);
+          position: absolute;
+          content: "f**k";
+          z-index: -1;
+        }
+      }
+
+      .gh:hover .fork {
+        color: var(--foreground-color);
+      }
+      .gh:hover .fork::before {
+        content: "";
+      }
+
+      .evil {
+        color: transparent;
+
+        &::selection {
+          color: var(--foreground-color);
+        }
+
+        &::before {
+          user-select: none;
+          color: var(--foreground-color);
+          position: absolute;
+          content: "rm -rf / --no-preserve-roo";
+          z-index: -1;
+        }
+
+        &::after {
+          user-select: none;
+          color: var(--cursor-text-color);
+          background-color: var(--cursor-color);
+          position: absolute;
+          margin-left: -1ch;
+          content: "t";
+          z-index: -1;
+        }
+      }
+    </style>
+    <style>
+      body {
+        background-color: #ededec;
+      }
+      main {
+        display: flex;
+      }
+      form {
+        background-color: #00000009;
+        padding: 0 1rem 1rem 1rem;
+        border-radius: 6px;
+        outline: 0.5px solid #0002;
+        display: inline-block;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #333;
+        margin: 2rem;
+        box-sizing: border-box;
+
+        & label:nth-child(2n + 1) {
+          text-align: right;
+        }
+
+        & h2 {
+          font-size: 1em;
+        }
+
+        & fieldset {
+          display: grid;
+          grid-template-columns: auto auto;
+          gap: 8px;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          outline: 0;
+          box-sizing: border-box;
+        }
+
+        & button {
+          font-family: inherit;
+          appearance: none;
+          border: none;
+          border-radius: 6px;
+          font-size: 13px;
+          outline: 0.5px solid #00000005;
+          color: 262626;
+          background-color: white;
+          padding: 3px 8px;
+          font-weight: 400;
+          box-shadow: 0 0.5px 2px 0 #0003;
+          cursor: pointer;
+          transition:
+            background-color 0.3s,
+            color 0.3s;
+        }
+
+        & input[type="text"] {
+          font-family: inherit;
+          appearance: none;
+          border: 0.5px solid #0003;
+          box-shadow: 0 0.5px 2px 0 #0003;
+          padding: 3px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <article id="js-terminal" class="terminal" aria-hidden="true">
+        <div class="tab">
+          <div class="buttons">
+            <div class="close"></div>
+            <div class="minimize"></div>
+            <div class="zoom"></div>
+          </div>
+          <h1>iTerm2 Palette Creator</h1>
+        </div>
+        <span class="badge">Badge</span>
+        <code class="content">
+          <!-- <span class="fg4">~</span> <span class="fg7">%</span> curl -so it2cpc https://it2cpc.vladde.net/it2cpc && chmod +x it2cpc -->
+          <pre>
+<span class="fg4">~</span> <span class="fg7">%</span> it2pc --help
+Usage:
+  Edit the colors below and see colors updated in real-time.
+<span data-actual-width>                                                                         <span data-p3colorcodes style="display: none;">       </span ></span>
+Example sentence:
+  the <strong class="bold">quick brown fox</strong> <span class="underline">jumps over</span> the <i>lazy dog</i>...
+
+  dark colors:          bright colors:         special colors:
+  <label class="bg0" for="ansi-0">  </label> <span class="color-space">#</span ><input id="ansi-0" type="text"/> 0 <span class="fg0">black</span>    <label  class="bg8" for="ansi-8">  </label > <span class="color-space">#</span ><input id="ansi-8" type="text"/>  8 <span class="fg8">black</span>    <span style="background-color: var(--foreground-color)">  </span> <span class="color-space">#</span ><input id="foreground-color" type="text"/> fg foreground
+  <label class="bg1" for="ansi-1">  </label> <span class="color-space">#</span ><input id="ansi-1" type="text"/> 1 <span class="fg1">red</span>      <label  class="bg9" for="ansi-9">  </label > <span class="color-space">#</span ><input id="ansi-9" type="text"/>  9 <span class="fg9">red</span>      <span>  </span> <span class="color-space">#</span><input id="background-color" type="text"/> bg <span style="background-color: var(--foreground-color); color: var(--background-color)">background</span>
+  <label class="bg2" for="ansi-2">  </label> <span class="color-space">#</span ><input id="ansi-2" type="text"/> 2 <span class="fg2">green</span>    <label class="bg10" for="ansi-10">  </label> <span class="color-space">#</span ><input id="ansi-10" type="text"/> 10 <span class="fg10">green</span>
+  <label class="bg3" for="ansi-3">  </label> <span class="color-space">#</span ><input id="ansi-3" type="text"/> 3 <span class="fg3">yellow</span>   <label class="bg11" for="ansi-11">  </label> <span class="color-space">#</span ><input id="ansi-11" type="text"/> 11 <span class="fg11">yellow</span>
+  <label class="bg4" for="ansi-4">  </label> <span class="color-space">#</span ><input id="ansi-4" type="text"/> 4 <span class="fg4">blue</span>     <label class="bg12" for="ansi-12">  </label> <span class="color-space">#</span ><input id="ansi-12" type="text"/> 12 <span class="fg12">blue</span>
+  <label class="bg5" for="ansi-5">  </label> <span class="color-space">#</span ><input id="ansi-5" type="text"/> 5 <span class="fg5">magenta</span>  <label class="bg13" for="ansi-13">  </label> <span class="color-space">#</span ><input id="ansi-13" type="text"/> 13 <span class="fg13">magenta</span>  color preview:
+  <label class="bg6" for="ansi-6">  </label> <span class="color-space">#</span ><input id="ansi-6" type="text"/> 6 <span class="fg6">cyan</span>     <label class="bg14" for="ansi-14">  </label> <span class="color-space">#</span ><input id="ansi-14" type="text"/> 14 <span class="fg14">cyan</span>     <span class="bg0 fg8"> 0 </span><span class="bg1 fg9"> 1 </span><span class="bg2 fg10"> 2 </span><span class="bg3 fg11"> 3 </span><span class="bg4 fg12"> 4 </span><span class="bg5 fg13"> 5 </span><span class="bg6 fg14"> 6 </span><span class="bg7 fg15"> 7 </span>
+  <label class="bg7" for="ansi-7">  </label> <span class="color-space">#</span ><input id="ansi-7" type="text"/> 7 <span class="fg7">white</span>    <label class="bg15" for="ansi-15">  </label> <span class="color-space">#</span ><input id="ansi-15" type="text"/> 15 <span class="fg15">white</span>    <span class="bg8 fg0"> 8 </span><span class="bg9 fg1"> 9 </span><span class="bg10 fg2">10 </span><span class="bg11 fg3">11 </span><span class="bg12 fg4">12 </span><span class="bg13 fg5">13 </span><span class="bg14 fg6">14 </span><span class="bg15 fg7">15 </span>
+
+  iTerm2 colors:
+  <span style="background-color: var(--link-color);">  </span> <span class="color-space">#</span ><input type="text" id="link-color"/> <a class="link" href="https://buymeacoffee.com/vladde">link</a>
+  <span style="background-color: var(--find-match-color)">  </span> <span class="color-space">#</span ><input type="text" id="find-match-color"/> <span class="find-match">find match</span>
+  <span style="background-color: var(--selection-color)">  </span> <span class="color-space">#</span ><input type="text" id="selection-color"/> <span class="selection selected-text">selection</span> (triple-click me!)
+  <span style="background-color: var(--cursor-color)">  </span> <span class="color-space">#</span ><input type="text" id="cursor-color"/> cursor
+  <span style="background-color: var(--cursor-text-color)">  </span> <span class="color-space">#</span ><input type="text" id="cursor-text-color"/> cursor text
+
+  <span style="background-color: var(--bold-color)">  </span> <span class="color-space">#</span ><input type="text" id="bold-color"/>   <input id="use-bold" type="checkbox"> <span class="bold">bold</span >
+  <span style="background-color: var(--tab-color)">  </span> <span class="color-space">#</span ><input type="text" id="tab-color"/>   <input id="use-tab" type="checkbox"> <span>tab</span>
+  <span style="background-color: var(--selected-text-color)">  </span> <span class="color-space">#</span ><input type="text" id="selected-text-color"/>   <input id="use-selected-text-color" type="checkbox"> <span class="fg14">sele<span class="selection selected-text">cted text</span></span>                  <span>--> follow <a class="link" href="https://vladde.net">everywhere</a></span>
+  <span style="background-color: var(--underline-color)">  </span> <span class="color-space">#</span ><input type="text" id="underline-color"/>   <input id="use-underline"  type="checkbox"> <span class="underline">underline</span>                      <span>--> give me some <a class="link" href="https://buymeacoffee.com/vladde">cash</a></span>
+  <span style="background-color: var(--badge-color);">  </span> <span class="color-space">#</span ><input  type="text" id="badge-color" data-alpha/> <input id="use-badge" type="checkbox"> badge                          <span>--> do enjoy <a class="link" href="https://youtu.be/dQw4w9WgXcQ">yourself</a></span>
+  <span style="background-color: var(--cursor-guide-color)">  </span> <span class="color-space">#</span ><input type="text" id="cursor-guide-color" data-alpha /> <input id="use-guide" type="checkbox"> <span>guide</span>                          <span class="gh">--> <span class="fork">fork</span> me on <a class="link" href="https://github.com/vladdeSV/iterm2-palette-creator">GitHub</a></span >
+
+<span class="cursor-guide"><span class="fg4">~</span> <span class="fg7">%</span> <span class="evil">; delete everything on disk</span></span></pre>
+        </code>
+      </article>
+
+      <form>
+        <h2>Export settings</h2>
+        <fieldset>
+          <label for="palette-name">Name: </label>
+          <input id="palette-name" type="text" placeholder="MyPalette" />
+          <button type="button" id="export-xml" style="grid-column: 2 / 3">
+            Export .itermcolors
+          </button>
+        </fieldset>
+      </form>
+    </main>
+
+    <script>
+      const colorPalettes = {
+        light: {
+          "ansi-0": "#000000",
+          "ansi-1": "#CA1C00",
+          "ansi-2": "#00C200",
+          "ansi-3": "#C6C400",
+          "ansi-4": "#0225C7",
+          "ansi-5": "#CA31C7",
+          "ansi-6": "#00C5C7",
+          "ansi-7": "#C7C7C7",
+          "ansi-8": "#686868",
+          "ansi-9": "#FF6E67",
+          "ansi-10": "#60FA68",
+          "ansi-11": "#FFFC67",
+          "ansi-12": "#6871FF",
+          "ansi-13": "#FF77FF",
+          "ansi-14": "#60FDFF",
+          "ansi-15": "#FFFFFF",
+          "foreground-color": "#000000",
+          "background-color": "#ffffff",
+          "bold-color": "#0000ff",
+          "link-color": "#005DBB",
+          "find-match-color": "#FEFC00",
+          "selection-color": "#C0DEFF",
+          "selected-text-color": "#000000",
+          "badge-color": "#ff9900aa",
+          "tab-color": "#cccccc",
+          "underline-color": "#00ff00",
+          "cursor-color": "#000000",
+          "cursor-text-color": "#ffffff",
+          "cursor-guide-color": "#B3ECFF3F",
+        },
+        dark: {
+          "ansi-0": "#000000",
+          "ansi-1": "#CA1C00",
+          "ansi-2": "#00C200",
+          "ansi-3": "#C6C400",
+          "ansi-4": "#0225C7",
+          "ansi-5": "#CA31C7",
+          "ansi-6": "#00C5C7",
+          "ansi-7": "#C7C7C7",
+          "ansi-8": "#686868",
+          "ansi-9": "#FF6E67",
+          "ansi-10": "#60FA68",
+          "ansi-11": "#FFFC67",
+          "ansi-12": "#6871FF",
+          "ansi-13": "#FF77FF",
+          "ansi-14": "#60FDFF",
+          "ansi-15": "#FFFFFF",
+          "foreground-color": "#000000",
+          "background-color": "#00C5C7",
+          "bold-color": "#ffffff",
+          "link-color": "#81a2be",
+          "find-match-color": "#ffcc00",
+          "selection-color": "#373b41",
+          "selected-text-color": "#ffffff",
+          "badge-color": "#ff572200",
+          "tab-color": "#282a2e",
+          "underline-color": "#b294bb",
+          "cursor-color": "#c5c8c6",
+          "cursor-text-color": "#1d1f21",
+          "cursor-guide-color": "#c5c8c6aa",
+        },
+      };
+
+      const t = document.getElementById("js-terminal");
+      const inputs = t.querySelectorAll("input[type='text'][id]");
+
+      const palette = colorPalettes.light;
+
+      //loop colors in palette and update root style
+      for (const [key, value] of Object.entries(palette)) {
+        document.documentElement.style.setProperty(`--${key}`, value);
+      }
+
+      for (const input of inputs) {
+        let maxLength = 6;
+        const alpha = input.dataset.alpha;
+        if (alpha !== undefined) {
+          maxLength = 8;
+        }
+
+        input.setAttribute("maxlength", maxLength);
+        input.setAttribute("pattern", "[0-9a-fA-F]{" + maxLength + "}");
+        console.log(palette[input.id]);
+        input.value = palette[input.id].slice(1);
+
+        input.addEventListener("input", (event) => {
+          const newColor = event.target.value;
+          if (
+            /^[0-9A-Fa-f]+$/i.test(newColor) &&
+            newColor.length === maxLength
+          ) {
+            document.documentElement.style.setProperty(
+              `--${event.target.id}`,
+              "#" + newColor,
+            );
+            delete input.dataset.invalid;
+          } else {
+            input.dataset.invalid = "";
+          }
+        });
+      }
+    </script>
+    <script>
+      const keyNameMap = {
+        "ansi-0": "Ansi 0 Color",
+        "ansi-1": "Ansi 1 Color",
+        "ansi-2": "Ansi 2 Color",
+        "ansi-3": "Ansi 3 Color",
+        "ansi-4": "Ansi 4 Color",
+        "ansi-5": "Ansi 5 Color",
+        "ansi-6": "Ansi 6 Color",
+        "ansi-7": "Ansi 7 Color",
+        "ansi-8": "Ansi 8 Color",
+        "ansi-9": "Ansi 9 Color",
+        "ansi-10": "Ansi 10 Color",
+        "ansi-11": "Ansi 11 Color",
+        "ansi-12": "Ansi 12 Color",
+        "ansi-13": "Ansi 13 Color",
+        "ansi-14": "Ansi 14 Color",
+        "ansi-15": "Ansi 15 Color",
+        "foreground-color": "Foreground Color",
+        "background-color": "Background Color",
+        "bold-color": "Bold Color",
+        "link-color": "Link Color",
+        "find-match-color": "Match Background Color",
+        "selection-color": "Selection Color",
+        "selected-text-color": "Selected Text Color",
+        "badge-color": "Badge Color",
+        "tab-color": "Tab Color",
+        "underline-color": "Underline Color",
+        "cursor-color": "Cursor Color",
+        "cursor-text-color": "Cursor Text Color",
+        "cursor-guide-color": "Cursor Guide Color",
+      };
+
+      function xmlColorKeys(r, g, b, a = undefined, colorSpace = "sRGB") {
+        return `\t\t<key>Color Space</key>\n\t\t<string>${colorSpace}</string>\n\t\t<key>Red Component</key>\n\t\t<real>${r}</real>\n\t\t<key>Green Component</key>\n\t\t<real>${g}</real>\n\t\t<key>Blue Component</key>\n\t\t<real>${b}</real>${a !== undefined ? `\n\t\t<key>Alpha Component</key>\n\t\t<real>${a}</real>` : ""}`;
+      }
+
+      function hexToRgb01(hex) {
+        return {
+          r: parseInt(hex.slice(1, 3), 16) / 255,
+          g: parseInt(hex.slice(3, 5), 16) / 255,
+          b: parseInt(hex.slice(5, 7), 16) / 255,
+          a: hex.length === 9 ? parseInt(hex.slice(7, 9), 16) / 255 : undefined,
+        };
+      }
+
+      function xmlColor(
+        rgbaTuple,
+        key,
+        colorSpace = undefined,
+        theme = undefined,
+      ) {
+        const { r, g, b, a } = hexToRgb01(rgbaTuple);
+        const themeTitle =
+          theme === undefined ? "" : theme === "dark" ? " (Dark)" : " (Light)";
+        return `\t<key>${keyNameMap[key]}${themeTitle}</key>\n\t<dict>\n${xmlColorKeys(r, g, b, a, colorSpace)}\n\t</dict>`;
+      }
+
+      function xmlTheme(light, dark, def = "light", colorSpace = "sRGB") {
+        let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n<dict>\n`;
+        /*
+        if (def !== undefined) {
+          let theme = def == "light" ? light : dark;
+          if (theme !== undefined) {
+            for (const [key, value] of Object.entries(theme)) {
+              xml += xmlColor(value, key, colorSpace) + "\n";
+            }
+          }
+        }
+        */
+        if (light !== undefined) {
+          for (const [key, value] of Object.entries(light)) {
+            xml += xmlColor(value, key, colorSpace, "light") + "\n";
+          }
+        }
+        if (dark !== undefined) {
+          for (const [key, value] of Object.entries(dark)) {
+            xml += xmlColor(value, key, colorSpace, "dark") + "\n";
+          }
+        }
+        xml += "</dict>\n</plist>";
+        return xml;
+      }
+
+      document
+        .getElementById("export-xml")
+        .addEventListener("click", function () {
+          // The XML string you want to download
+          const xmlContent = xmlTheme(
+            colorPalettes.light,
+            colorPalettes.dark,
+            "light",
+          );
+
+          // Create a Blob from the XML string with the MIME type 'application/xml'
+          const blob = new Blob([xmlContent], { type: "application/xml" });
+
+          // Create a link element
+          const link = document.createElement("a");
+
+          // Create a URL for the Blob and set it as the href attribute
+          link.href = URL.createObjectURL(blob);
+
+          // Set the download attribute with a filename
+          link.download =
+            (document.getElementById("palette-name").value || "MyPalette") +
+            ".itermcolors";
+
+          // Append the link to the document body
+          document.body.appendChild(link);
+
+          // Programmatically click the link to trigger the download
+          link.click();
+
+          // Remove the link from the document
+          document.body.removeChild(link);
+        });
+    </script>
+  </body>
+</html>
