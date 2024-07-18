@@ -141,6 +141,7 @@ importButton.addEventListener("click", async () => {
   reader.readAsText(file);
 });
 
+/* temporarily removed
 /// reset fields
 const resetButton = document.getElementById("clear-fields");
 resetButton.addEventListener("click", () => {
@@ -158,3 +159,4 @@ resetButton.addEventListener("click", () => {
     storage.setItem(selectedTheme + "-" + input.id, value);
   }
 });
+*/
