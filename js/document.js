@@ -127,7 +127,22 @@ importButton.addEventListener("click", async () => {
   const reader = new FileReader();
   reader.onload = function (e) {
     const content = e.target.result;
-    const colors = parsePlist(content);
+    const [light, dark] = parsePlistMultiTheme(content);
+
+    let colors = light || dark;
+
+    if (light && dark) {
+      const theme = prompt("is dual-theme, which theme to set? light / dark");
+      if (theme === "light") {
+        colors = light;
+      } else if (theme === "dark") {
+        colors = dark;
+      } else {
+        alert("sorry, must be exactly 'light' or 'dark'. please try again");
+        return;
+      }
+    }
+
     setPalette(colors);
 
     // store colors in storage

@@ -1,4 +1,4 @@
-function parsePlist(content) {
+function parsePlistMultiTheme(content) {
   // can't parse if extra stuff in file
   content = content.replace(/^(.|\n)+(?=<plist )/, "");
 
@@ -7,9 +7,13 @@ function parsePlist(content) {
 
   const nodes = plist.getElementsByTagName("dict")[0].children;
 
-  const ret = {};
+  const ret = {
+    light: {},
+    dark: {},
+  };
 
   let currentKey = undefined;
+  let currentTheme = "light";
   for (const node of nodes) {
     if (node.tagName === "key") {
       if (currentKey) {
@@ -20,7 +24,7 @@ function parsePlist(content) {
 
       let value = node.textContent;
 
-      // fixme: ignore dark and light modes rn
+      currentTheme = value.includes("Dark") ? "dark" : "light";
       value = value.replace(/ \((Dark|Light)\)/, "");
 
       currentKey = referenceFromColorName(value);
@@ -34,12 +38,20 @@ function parsePlist(content) {
 
       const color = parseColorDict(node);
 
-      ret[currentKey] = color;
+      ret[currentTheme][currentKey] = color;
       currentKey = undefined;
     }
   }
 
-  return ret;
+  if (Object.keys(ret.light).length === 0) {
+    ret.light = undefined;
+  }
+
+  if (Object.keys(ret.dark).length === 0) {
+    ret.dark = undefined;
+  }
+
+  return [ret.light, ret.dark];
 }
 
 function parseColorDict(colorDict) {
