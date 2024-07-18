@@ -97,7 +97,7 @@
     display: inline-block;
   }
 
-  & input {
+  & :is(input, select) {
     display: inline-block;
     appearance: none;
     font-family: monospace;
@@ -137,6 +137,10 @@
     &:checked::before {
       content: "[x]";
     }
+  }
+
+  & select {
+    cursor: pointer;
   }
 }
 
