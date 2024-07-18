@@ -160,3 +160,23 @@ resetButton.addEventListener("click", () => {
   }
 });
 */
+
+/// export theme
+const exportButton = document.getElementById("export-xml");
+exportButton.addEventListener("click", () => {
+  const themes = enableDualTheme
+    ? [loadPalette("light"), loadPalette("dark")]
+    : [loadPalette(selectedTheme)];
+  const xmlContent = xmlTheme(themes);
+
+  const blob = new Blob([xmlContent], { type: "application/xml" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download =
+    (document.getElementById("palette-name").value || "MyPalette") +
+    ".itermcolors";
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+});

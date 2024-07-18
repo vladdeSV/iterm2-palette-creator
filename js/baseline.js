@@ -95,6 +95,19 @@ function rgb01ToHex(red, green, blue, alpha = undefined) {
   return `#${r}${g}${b}${a}`;
 }
 
+function hexToRgb01(hex) {
+  if (hex.startsWith("#")) {
+    hex = hex.slice(1);
+  }
+
+  return {
+    r: parseInt(hex.slice(0, 2), 16) / 255,
+    g: parseInt(hex.slice(2, 4), 16) / 255,
+    b: parseInt(hex.slice(4, 6), 16) / 255,
+    a: hex.length === 8 ? parseInt(hex.slice(6, 8), 16) / 255 : undefined,
+  };
+}
+
 const lightDefaultPalette = {
   "foreground-color": "#000000",
   "background-color": "#ffffff",

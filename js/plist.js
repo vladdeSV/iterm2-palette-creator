@@ -93,3 +93,68 @@ function parseColorDict(colorDict) {
 
   return hex;
 }
+
+const keyNameMap = {
+  "ansi-0": "Ansi 0 Color",
+  "ansi-1": "Ansi 1 Color",
+  "ansi-2": "Ansi 2 Color",
+  "ansi-3": "Ansi 3 Color",
+  "ansi-4": "Ansi 4 Color",
+  "ansi-5": "Ansi 5 Color",
+  "ansi-6": "Ansi 6 Color",
+  "ansi-7": "Ansi 7 Color",
+  "ansi-8": "Ansi 8 Color",
+  "ansi-9": "Ansi 9 Color",
+  "ansi-10": "Ansi 10 Color",
+  "ansi-11": "Ansi 11 Color",
+  "ansi-12": "Ansi 12 Color",
+  "ansi-13": "Ansi 13 Color",
+  "ansi-14": "Ansi 14 Color",
+  "ansi-15": "Ansi 15 Color",
+  "foreground-color": "Foreground Color",
+  "background-color": "Background Color",
+  "bold-color": "Bold Color",
+  "link-color": "Link Color",
+  "find-match-color": "Match Background Color",
+  "selection-color": "Selection Color",
+  "selected-text-color": "Selected Text Color",
+  "badge-color": "Badge Color",
+  "tab-color": "Tab Color",
+  "underline-color": "Underline Color",
+  "cursor-color": "Cursor Color",
+  "cursor-text-color": "Cursor Text Color",
+  "cursor-guide-color": "Cursor Guide Color",
+};
+
+function xmlColorKeys(r, g, b, a = undefined, colorSpace = "sRGB") {
+  return `\t\t<key>Color Space</key>\n\t\t<string>${colorSpace}</string>\n\t\t<key>Red Component</key>\n\t\t<real>${r}</real>\n\t\t<key>Green Component</key>\n\t\t<real>${g}</real>\n\t\t<key>Blue Component</key>\n\t\t<real>${b}</real>${a !== undefined ? `\n\t\t<key>Alpha Component</key>\n\t\t<real>${a}</real>` : ""}`;
+}
+
+function xmlColor(hex, key, colorSpace = undefined, theme = undefined) {
+  const { r, g, b, a } = hexToRgb01(hex);
+  console.debug(`converted ${hex} to ${r} ${g} ${b}`);
+  const themeTitle =
+    theme === undefined ? "" : theme === "dark" ? " (Dark)" : " (Light)";
+  return `\t<key>${keyNameMap[key]}${themeTitle}</key>\n\t<dict>\n${xmlColorKeys(r, g, b, a, colorSpace)}\n\t</dict>`;
+}
+
+function xmlTheme(themes, colorSpace = "sRGB") {
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n<dict>\n`;
+
+  const [light, dark] = themes;
+
+  if (light && dark) {
+    for (const [key, value] of Object.entries(light)) {
+      xml += xmlColor(value, key, colorSpace, "light") + "\n";
+    }
+    for (const [key, value] of Object.entries(dark)) {
+      xml += xmlColor(value, key, colorSpace, "dark") + "\n";
+    }
+  } else {
+    for (const [key, value] of Object.entries(light || dark)) {
+      xml += xmlColor(value, key, colorSpace) + "\n";
+    }
+  }
+  xml += "</dict>\n</plist>";
+  return xml;
+}
