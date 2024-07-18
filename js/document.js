@@ -18,7 +18,7 @@ function loadPalette(theme) {
     if (color) {
       palette[ref] = color;
     } else {
-      console.log("no color for ", theme + "-" + ref);
+      console.debug("no color for ", theme + "-" + ref);
     }
   }
   return palette;
@@ -55,7 +55,8 @@ function setPalette(palette) {
       (input) => input.id === ref,
     );
     if (!referencedInput) {
-      throw new Error(`No input found for ${ref}`);
+      console.error(`No input found for ${ref}`);
+      continue;
     }
 
     let inputColorCode = formatColorCodeForInputValue(_paletteColor);
@@ -103,7 +104,7 @@ for (const input of colorCodeInputs) {
     const colorCode = event.target.value;
 
     storage.setItem(selectedTheme + "-" + ref, colorCode);
-    console.log("setting:", selectedTheme + "-" + ref, "=", colorCode);
+    console.debug("setting:", selectedTheme + "-" + ref, "=", colorCode);
 
     if (isValidInputColorCode(colorCode, usesAlpha)) {
       setRootColor(ref, formatColorCodeForCSS(colorCode));
