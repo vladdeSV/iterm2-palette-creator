@@ -56,16 +56,58 @@ Example sentence:
         </code>
       </article>
 
-      <form>
-        <h2>Export settings</h2>
-        <fieldset>
-          <label for="palette-name">Name: </label>
-          <input id="palette-name" type="text" placeholder="MyPalette" />
-          <button type="button" id="export-xml" style="grid-column: 2 / 3">
-            Export .itermcolors
-          </button>
-        </fieldset>
-      </form>
+      <section style="display: flex; flex-direction: column">
+        <form>
+          <fieldset>
+            <h2>Theme</h2>
+
+            <label for="dual-theme"> ☯︎ Enable dual-theme: </label>
+            <input id="dual-theme" type="checkbox" />
+
+            <label for="theme">Current theme:</label>
+            <div>
+              <select id="theme-selector" disabled>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+              </select>
+            </div>
+            <label for="clear-fields">Reset:</label>
+            <button type="button" id="clear-fields">Clear fields</button>
+
+            <!--
+            <h2>Select pre-defined</h2>
+            <label for="predefined-palettes">Scheme: </label>
+            <div>
+              <select id="predefined-palettes">
+                <option value="high-contrast">High contrast</option>
+                <option value="regular">Regular</option>
+              </select>
+            </div>
+            <button type="button" id="apply-palette" style="grid-column: 2 / 3">
+              Apply selected palette
+            </button>
+            -->
+
+            <h2>Import theme</h2>
+            <label for="import-xml">Import .itermcolors:</label>
+            <input id="import-xml" type="file" accept=".itermcolors" />
+
+            <button type="button" id="apply-theme" style="grid-column: 2">
+              Apply theme
+            </button>
+          </fieldset>
+        </form>
+        <form>
+          <fieldset>
+            <h2>Export settings</h2>
+            <label for="palette-name">Name:</label>
+            <input id="palette-name" type="text" placeholder="MyPalette" />
+            <button type="button" id="export-xml" style="grid-column: 2 / 3">
+              Export .itermcolors
+            </button>
+          </fieldset>
+        </form>
+      </section>
     </main>
 
     <script>
