@@ -25,12 +25,16 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
+      - name: move files
+        run: |
+          mkdir website
+          mv index.html js css website
       - name: setup pages
         uses: actions/configure-pages@v5
       - name: upload
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: "website"
       - name: deploy
         id: deployment
         uses: actions/deploy-pages@v4
